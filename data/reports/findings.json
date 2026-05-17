@@ -1,0 +1,86 @@
+[
+  {
+    "evidence": {
+      "event_type": "docker_activity",
+      "raw_preview": "2026-05-17T10:10:45Z app: outbound request header Authorization: Bearer demo-token-value-12345",
+      "source": "docker"
+    },
+    "kind": "secret.exposure",
+    "severity": "critical",
+    "summary": "Log line contains credential-like material and should be redacted."
+  },
+  {
+    "evidence": {
+      "failed_attempts": 3,
+      "ip": "198.51.100.22",
+      "users": [
+        "admin",
+        "deploy",
+        "root"
+      ]
+    },
+    "kind": "auth.bruteforce",
+    "severity": "high",
+    "summary": "Repeated SSH login failures indicate a brute-force attempt."
+  },
+  {
+    "evidence": {
+      "ip": "198.51.100.22",
+      "matched": "sqlmap",
+      "path": "/.env",
+      "status": 404,
+      "user_agent": "sqlmap/1.7"
+    },
+    "kind": "web.suspicious_request",
+    "severity": "medium",
+    "summary": "HTTP request matches a suspicious path or scanner signature."
+  },
+  {
+    "evidence": {
+      "ip": "198.51.100.22",
+      "matched": "/wp-admin",
+      "path": "/wp-admin",
+      "status": 404,
+      "user_agent": "Mozilla/5.0"
+    },
+    "kind": "web.suspicious_request",
+    "severity": "medium",
+    "summary": "HTTP request matches a suspicious path or scanner signature."
+  },
+  {
+    "evidence": {
+      "ip": "192.0.2.45",
+      "matched": "select%20",
+      "path": "/search?q=union%20select%20password",
+      "status": 403,
+      "user_agent": "Mozilla/5.0"
+    },
+    "kind": "web.suspicious_request",
+    "severity": "medium",
+    "summary": "HTTP request matches a suspicious path or scanner signature."
+  },
+  {
+    "evidence": {
+      "event_types": [
+        "http_request",
+        "ssh_failed_login"
+      ],
+      "ip": "198.51.100.22"
+    },
+    "kind": "ip.multi_signal",
+    "severity": "medium",
+    "summary": "IP appears across multiple event types and deserves review."
+  },
+  {
+    "evidence": {
+      "event_types": [
+        "http_request",
+        "ssh_successful_login"
+      ],
+      "ip": "203.0.113.10"
+    },
+    "kind": "ip.multi_signal",
+    "severity": "medium",
+    "summary": "IP appears across multiple event types and deserves review."
+  }
+]

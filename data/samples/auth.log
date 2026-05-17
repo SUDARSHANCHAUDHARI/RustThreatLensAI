@@ -1,0 +1,4 @@
+May 17 10:00:01 kiosk-01 sshd[1201]: Failed password for invalid user admin from 198.51.100.22 port 50122 ssh2
+May 17 10:00:04 kiosk-01 sshd[1204]: Failed password for invalid user root from 198.51.100.22 port 50124 ssh2
+May 17 10:00:08 kiosk-01 sshd[1207]: Failed password for deploy from 198.51.100.22 port 50128 ssh2
+May 17 10:05:17 kiosk-01 sshd[1218]: Accepted password for kiosk from 203.0.113.10 port 50911 ssh2
