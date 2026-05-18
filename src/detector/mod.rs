@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
 use crate::parser::LogEvent;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Finding {
@@ -40,7 +40,10 @@ fn detect_brute_force(events: &[LogEvent]) -> Option<Finding> {
     for event in events {
         if event.action.as_deref() == Some("failed_login") {
             if let Some(ip) = &event.ip {
-                ip_failures.entry(ip.clone()).or_default().push(event.line.clone());
+                ip_failures
+                    .entry(ip.clone())
+                    .or_default()
+                    .push(event.line.clone());
             }
         }
     }
@@ -62,21 +65,30 @@ fn detect_brute_force(events: &[LogEvent]) -> Option<Finding> {
     Some(Finding {
         rule: "BRUTE_FORCE".to_string(),
         severity: Severity::Critical,
-        description: format!("{} IP(s) with 5+ failed login attempts detected", offenders.len()),
+        description: format!(
+            "{} IP(s) with 5+ failed login attempts detected",
+            offenders.len()
+        ),
         evidence,
     })
 }
 
 fn detect_secret_in_logs(events: &[LogEvent]) -> Option<Finding> {
     let patterns = [
-        "password=", "api_key=", "token=", "secret=", "Authorization: Bearer",
+        "password=",
+        "api_key=",
+        "token=",
+        "secret=",
+        "Authorization: Bearer",
     ];
 
     let matches: Vec<String> = events
         .iter()
         .filter(|e| {
             let lower = e.line.to_lowercase();
-            patterns.iter().any(|p| lower.contains(&p.to_lowercase() as &str))
+            patterns
+                .iter()
+                .any(|p| lower.contains(&p.to_lowercase() as &str))
         })
         .map(|e| e.line.clone())
         .collect();

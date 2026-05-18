@@ -32,7 +32,8 @@ fn test_analyze_subcommand_help() {
 
 #[test]
 fn test_parse_auth_failed_login() {
-    let line = "May 18 10:01:01 server sshd[1234]: Failed password for root from 192.168.1.1 port 22";
+    let line =
+        "May 18 10:01:01 server sshd[1234]: Failed password for root from 192.168.1.1 port 22";
     let events = parser::parse(line, "auth");
     assert_eq!(events.len(), 1);
     assert_eq!(events[0].action.as_deref(), Some("failed_login"));
@@ -41,7 +42,8 @@ fn test_parse_auth_failed_login() {
 
 #[test]
 fn test_parse_auth_successful_login() {
-    let line = "May 18 10:01:01 server sshd[1234]: Accepted password for admin from 10.0.0.1 port 22";
+    let line =
+        "May 18 10:01:01 server sshd[1234]: Accepted password for admin from 10.0.0.1 port 22";
     let events = parser::parse(line, "auth");
     assert_eq!(events.len(), 1);
     assert_eq!(events[0].action.as_deref(), Some("successful_login"));
@@ -114,7 +116,10 @@ fn test_brute_force_gives_critical_risk() {
     let events = parser::parse(&log, "auth");
     let findings = detector::detect(&events);
     let rep = report::build("test.log", "auth", &events, &findings);
-    assert!(matches!(rep.risk_level, threatlens::report::RiskLevel::Critical));
+    assert!(matches!(
+        rep.risk_level,
+        threatlens::report::RiskLevel::Critical
+    ));
 }
 
 // --- CLI integration with real file ---
