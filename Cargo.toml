@@ -6,6 +6,10 @@ authors = ["Sudarshan Chaudhari <sunny.sudarshan@gmail.com>"]
 description = "AI-powered log threat analyzer — detects brute-force, suspicious IPs, secrets, and anomalies"
 license = "MIT"
 
+[lib]
+name = "threatlens"
+path = "src/lib.rs"
+
 [[bin]]
 name = "threatlens"
 path = "src/main.rs"
