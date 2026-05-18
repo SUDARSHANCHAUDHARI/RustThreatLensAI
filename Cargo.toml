@@ -1,0 +1,28 @@
+[package]
+name = "threatlens"
+version = "0.1.0"
+edition = "2021"
+authors = ["Sudarshan Chaudhari <sunny.sudarshan@gmail.com>"]
+description = "AI-powered log threat analyzer — detects brute-force, suspicious IPs, secrets, and anomalies"
+license = "MIT"
+
+[[bin]]
+name = "threatlens"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+thiserror = "2"
+regex = "1"
+chrono = { version = "0.4", features = ["serde"] }
+colored = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "3"
+tempfile = "3"
