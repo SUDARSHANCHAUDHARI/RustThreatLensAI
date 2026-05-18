@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
-use crate::parser::LogEvent;
 use crate::detector::Finding;
+use crate::parser::LogEvent;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ThreatReport {
@@ -31,12 +31,26 @@ impl std::fmt::Display for RiskLevel {
     }
 }
 
-pub fn build(file: &str, log_type: &str, events: &[LogEvent], findings: &[Finding]) -> ThreatReport {
-    let risk_level = if findings.iter().any(|f| matches!(f.severity, crate::detector::Severity::Critical)) {
+pub fn build(
+    file: &str,
+    log_type: &str,
+    events: &[LogEvent],
+    findings: &[Finding],
+) -> ThreatReport {
+    let risk_level = if findings
+        .iter()
+        .any(|f| matches!(f.severity, crate::detector::Severity::Critical))
+    {
         RiskLevel::Critical
-    } else if findings.iter().any(|f| matches!(f.severity, crate::detector::Severity::High)) {
+    } else if findings
+        .iter()
+        .any(|f| matches!(f.severity, crate::detector::Severity::High))
+    {
         RiskLevel::High
-    } else if findings.iter().any(|f| matches!(f.severity, crate::detector::Severity::Medium)) {
+    } else if findings
+        .iter()
+        .any(|f| matches!(f.severity, crate::detector::Severity::Medium))
+    {
         RiskLevel::Medium
     } else {
         RiskLevel::Low
@@ -45,7 +59,10 @@ pub fn build(file: &str, log_type: &str, events: &[LogEvent], findings: &[Findin
     let summary = if findings.is_empty() {
         "No threats detected.".to_string()
     } else {
-        format!("{} threat(s) detected. Immediate review recommended.", findings.len())
+        format!(
+            "{} threat(s) detected. Immediate review recommended.",
+            findings.len()
+        )
     };
 
     ThreatReport {

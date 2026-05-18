@@ -38,7 +38,10 @@ fn parse_line(line: &str, log_type: &str) -> LogEvent {
 }
 
 fn detect_type(line: &str) -> String {
-    if line.contains("sshd") || line.contains("Failed password") || line.contains("Accepted password") {
+    if line.contains("sshd")
+        || line.contains("Failed password")
+        || line.contains("Accepted password")
+    {
         "auth".to_string()
     } else if line.contains("HTTP/") || line.contains("GET ") || line.contains("POST ") {
         "nginx".to_string()
@@ -66,9 +69,13 @@ fn extract_user(line: &str, log_type: &str) -> Option<String> {
 fn extract_action(line: &str, log_type: &str) -> Option<String> {
     match log_type {
         "auth" => {
-            if line.contains("Failed") { Some("failed_login".to_string()) }
-            else if line.contains("Accepted") { Some("successful_login".to_string()) }
-            else { None }
+            if line.contains("Failed") {
+                Some("failed_login".to_string())
+            } else if line.contains("Accepted") {
+                Some("successful_login".to_string())
+            } else {
+                None
+            }
         }
         "nginx" => {
             let re = regex::Regex::new(r#""(GET|POST|PUT|DELETE|PATCH)"#).ok()?;
