@@ -1,1 +1,6 @@
-# TODO: add API Dockerfile
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY . .
+
+CMD ["python", "-m", "apps.api.app.cli", "analyze", "data/samples/auth.log", "data/samples/nginx-access.log", "data/samples/docker.log", "--events", "data/reports/events.json", "--findings", "data/reports/findings.json", "--ip-risk", "data/reports/ip-risk.json", "--report", "data/reports/incident-report.md", "--triage-report", "data/reports/triage-report.md"]

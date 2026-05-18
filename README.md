@@ -46,7 +46,9 @@ python3 -m apps.api.app.cli analyze \
   data/samples/docker.log \
   --events data/reports/events.json \
   --findings data/reports/findings.json \
-  --report data/reports/incident-report.md
+  --ip-risk data/reports/ip-risk.json \
+  --report data/reports/incident-report.md \
+  --triage-report data/reports/triage-report.md
 ```
 
 Run tests:
@@ -62,12 +64,28 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - Flags suspicious web paths and scanner user agents.
 - Detects credential-like material in logs.
 - Correlates IPs across multiple event types.
-- Generates JSON events, JSON findings, and a Markdown incident report.
+- Builds a deterministic summary through a provider boundary.
+- Generates JSON events, findings, IP risk tables, an incident report, and a triage report.
+
+## Demo Artifacts
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Security notes](docs/SECURITY_NOTES.md)
+- [Demo walkthrough](docs/DEMO.md)
+- [Release notes](docs/RELEASE_NOTES.md)
+- [Sample incident report](data/reports/incident-report.md)
+- [Sample triage report](data/reports/triage-report.md)
+
+## Docker Demo
+
+```bash
+docker compose run --rm threatlens-demo
+```
 
 ## Roadmap
 
-- Polish sample output screenshots or terminal demos
-- Add architecture diagram and deeper implementation notes
-- Expand test coverage around edge cases
-- Add Docker or local demo workflow where useful
-- Prepare `v0.1.0-mvp` release notes
+- Add redaction pipeline before external AI providers
+- Add parser confidence and parse-error reporting
+- Add more log fixtures for MFA, container privilege drift, and web bursts
+- Add FastAPI upload endpoint and React dashboard
+- Prepare GitHub release `v0.1.0-mvp`

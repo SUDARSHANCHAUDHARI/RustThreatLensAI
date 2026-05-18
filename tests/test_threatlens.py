@@ -10,6 +10,7 @@ import unittest
 from pathlib import Path
 
 from apps.api.app.services.log_parser import parse_log_files
+from apps.api.app.services.report_generator import build_triage_report, ip_risk_table
 from apps.api.app.services.threat_detector import detect_threats
 
 
@@ -38,6 +39,14 @@ class ThreatLensTests(unittest.TestCase):
         self.assertIn("secret.exposure", kinds)
         self.assertIn("ip.multi_signal", kinds)
 
+    def test_builds_ip_risk_table(self) -> None:
+        events = parse_log_files(SAMPLES)
+        findings = detect_threats(events)
+        rows = ip_risk_table(events, findings)
+
+        self.assertTrue(any(row["ip"] == "198.51.100.22" for row in rows))
+        self.assertIn("ThreatLens AI Triage Report", build_triage_report(events, findings))
+
     def test_cli_writes_findings_and_report(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
@@ -52,8 +61,12 @@ class ThreatLensTests(unittest.TestCase):
                     str(out / "events.json"),
                     "--findings",
                     str(out / "findings.json"),
+                    "--ip-risk",
+                    str(out / "ip-risk.json"),
                     "--report",
                     str(out / "report.md"),
+                    "--triage-report",
+                    str(out / "triage.md"),
                 ],
                 cwd=ROOT,
                 check=True,
@@ -62,11 +75,16 @@ class ThreatLensTests(unittest.TestCase):
             )
 
             findings = json.loads((out / "findings.json").read_text(encoding="utf-8"))
+            ip_risk = json.loads((out / "ip-risk.json").read_text(encoding="utf-8"))
             report = (out / "report.md").read_text(encoding="utf-8")
+            triage = (out / "triage.md").read_text(encoding="utf-8")
 
             self.assertIn("Parsed", result.stdout)
             self.assertGreaterEqual(len(findings), 4)
+            self.assertGreaterEqual(len(ip_risk), 3)
             self.assertIn("ThreatLens AI Incident Report", report)
+            self.assertIn("Priority Queue", report)
+            self.assertIn("ThreatLens AI Triage Report", triage)
 
 
 if __name__ == "__main__":
