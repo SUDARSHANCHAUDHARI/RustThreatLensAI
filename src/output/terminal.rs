@@ -1,6 +1,6 @@
 use colored::Colorize;
-use crate::report::{RiskLevel, ThreatReport};
-use crate::detector::Severity;
+use threatlens::report::{RiskLevel, ThreatReport};
+use threatlens::detector::Severity;
 
 pub fn print(report: &ThreatReport) {
     println!("\n{}", "ThreatLens Report".bold().underline());

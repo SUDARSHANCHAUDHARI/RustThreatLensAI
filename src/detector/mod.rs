@@ -74,7 +74,10 @@ fn detect_secret_in_logs(events: &[LogEvent]) -> Option<Finding> {
 
     let matches: Vec<String> = events
         .iter()
-        .filter(|e| patterns.iter().any(|p| e.line.to_lowercase().contains(p)))
+        .filter(|e| {
+            let lower = e.line.to_lowercase();
+            patterns.iter().any(|p| lower.contains(&p.to_lowercase() as &str))
+        })
         .map(|e| e.line.clone())
         .collect();
 

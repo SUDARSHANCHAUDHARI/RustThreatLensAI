@@ -1,8 +1,7 @@
 mod cli;
-mod detector;
 mod output;
-mod parser;
-mod report;
+
+use threatlens::{detector, parser, report};
 
 use anyhow::Result;
 use clap::Parser;
