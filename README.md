@@ -1,6 +1,5 @@
 # RustThreatLensAI
 
-[![CI](https://github.com/SUDARSHANCHAUDHARI/RustThreatLensAI/actions/workflows/ci.yml/badge.svg)](https://github.com/SUDARSHANCHAUDHARI/RustThreatLensAI/actions/workflows/ci.yml)
 ![Rust](https://img.shields.io/badge/Rust-1.75%2B-orange?logo=rust)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
