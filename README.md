@@ -136,6 +136,13 @@ tests/
   integration_test.rs
 ```
 
+## Project Docs
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Maintainer notes](docs/NOTES.md)
+- [Content plan](docs/CONTENT_PLAN.md)
+
 ## Release Status
 
 Current production release: `v1.0.0`
