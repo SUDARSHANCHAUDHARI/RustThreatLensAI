@@ -1,0 +1,7 @@
+May 18 10:01:01 server sshd[1234]: Failed password for root from 10.0.0.1 port 22
+May 18 10:01:02 server sshd[1234]: Failed password for root from 10.0.0.1 port 22
+May 18 10:01:03 server sshd[1234]: Failed password for root from 10.0.0.1 port 22
+May 18 10:01:04 server sshd[1234]: Failed password for root from 10.0.0.1 port 22
+May 18 10:01:05 server sshd[1234]: Failed password for root from 10.0.0.1 port 22
+May 18 10:02:00 server sshd[1234]: Accepted password for admin from 10.0.0.2 port 22
+2026-05-18 curl -H 'Authorization: Bearer example-token-value' https://api.example.com

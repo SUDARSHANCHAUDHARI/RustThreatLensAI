@@ -56,6 +56,31 @@ threatlens analyze docker.log --log-type docker
 threatlens analyze auth.log --json
 ```
 
+## Included Example
+
+The repository includes a small auth log fixture:
+
+```bash
+threatlens analyze examples/auth.sample
+```
+
+Real output:
+
+```text
+ThreatLens Report
+File: examples/auth.sample
+Log Type: auto
+Total Events: 7
+Risk: Critical
+Summary: 2 threat(s) detected. Immediate review recommended.
+
+Findings:
+  BRUTE_FORCE — 1 IP(s) with 5+ failed login attempts detected
+    10.0.0.1: 5 failed attempts
+  SECRET_IN_LOGS — 1 line(s) may contain exposed secrets
+    2026-05-18 curl -H 'Authorization: Bearer example-token-value' https://api.example.com
+```
+
 ## Supported Log Types
 
 | Type | Detection Focus |
