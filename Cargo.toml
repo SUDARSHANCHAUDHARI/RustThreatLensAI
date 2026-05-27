@@ -3,10 +3,12 @@ name = "threatlens"
 version = "1.0.0"
 edition = "2021"
 authors = ["Sudarshan Chaudhari <sunny.sudarshan@gmail.com>"]
-description = "AI-powered log threat analyzer — detects brute-force, suspicious IPs, secrets, and anomalies"
+description = "Log threat analyzer for brute-force attempts, suspicious IPs, secrets, and anomalies"
 license = "MIT"
 repository = "https://github.com/SUDARSHANCHAUDHARI/RustThreatLensAI"
 readme = "README.md"
+keywords = ["security", "logs", "threats", "secrets", "cli"]
+categories = ["command-line-utilities", "development-tools"]
 
 [lib]
 name = "threatlens"
