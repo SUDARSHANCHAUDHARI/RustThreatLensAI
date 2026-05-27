@@ -3,6 +3,14 @@
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.jks
+*.keystore
+local.properties
+secure.properties
+secrets.*
+credentials.*
 *.log
 *.tmp
 .cache/
