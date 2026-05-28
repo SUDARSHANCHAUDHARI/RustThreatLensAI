@@ -1,6 +1,6 @@
 [package]
 name = "threatlens"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2021"
 authors = ["Sudarshan Chaudhari <sunny.sudarshan@gmail.com>"]
 description = "Log threat analyzer for brute-force attempts, suspicious IPs, secrets, and anomalies"
