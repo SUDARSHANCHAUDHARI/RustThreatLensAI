@@ -23,5 +23,8 @@ pub enum Commands {
         /// Output as JSON
         #[arg(long)]
         json: bool,
+        /// Failed-login count from one IP before BRUTE_FORCE is reported
+        #[arg(long, default_value_t = 5)]
+        brute_force_threshold: usize,
     },
 }

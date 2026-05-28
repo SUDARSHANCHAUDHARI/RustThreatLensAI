@@ -140,3 +140,28 @@ fn test_analyze_real_file_json_output() {
         .success()
         .stdout(contains("total_events"));
 }
+
+#[test]
+fn test_cli_custom_brute_force_threshold_can_reduce_noise() {
+    let mut file = NamedTempFile::new().unwrap();
+    for _ in 0..5 {
+        writeln!(
+            file,
+            "May 18 10:01:01 server sshd: Failed password for root from 10.0.0.1 port 22"
+        )
+        .unwrap();
+    }
+
+    Command::cargo_bin("threatlens")
+        .unwrap()
+        .args([
+            "analyze",
+            file.path().to_str().unwrap(),
+            "--brute-force-threshold",
+            "6",
+            "--json",
+        ])
+        .assert()
+        .success()
+        .stdout(contains("\"findings\": []"));
+}

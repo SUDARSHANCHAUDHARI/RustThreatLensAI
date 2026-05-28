@@ -19,9 +19,17 @@ pub enum Severity {
 }
 
 pub fn detect(events: &[LogEvent]) -> Vec<Finding> {
-    let mut findings = Vec::new();
+    detect_with_brute_force_threshold(events, 5)
+}
 
-    if let Some(f) = detect_brute_force(events) {
+pub fn detect_with_brute_force_threshold(
+    events: &[LogEvent],
+    brute_force_threshold: usize,
+) -> Vec<Finding> {
+    let mut findings = Vec::new();
+    let brute_force_threshold = brute_force_threshold.max(1);
+
+    if let Some(f) = detect_brute_force(events, brute_force_threshold) {
         findings.push(f);
     }
     if let Some(f) = detect_secret_in_logs(events) {
@@ -34,7 +42,7 @@ pub fn detect(events: &[LogEvent]) -> Vec<Finding> {
     findings
 }
 
-fn detect_brute_force(events: &[LogEvent]) -> Option<Finding> {
+fn detect_brute_force(events: &[LogEvent], threshold: usize) -> Option<Finding> {
     let mut ip_failures: HashMap<String, Vec<String>> = HashMap::new();
 
     for event in events {
@@ -50,7 +58,7 @@ fn detect_brute_force(events: &[LogEvent]) -> Option<Finding> {
 
     let offenders: Vec<(String, Vec<String>)> = ip_failures
         .into_iter()
-        .filter(|(_, lines)| lines.len() >= 5)
+        .filter(|(_, lines)| lines.len() >= threshold)
         .collect();
 
     if offenders.is_empty() {
@@ -66,8 +74,9 @@ fn detect_brute_force(events: &[LogEvent]) -> Option<Finding> {
         rule: "BRUTE_FORCE".to_string(),
         severity: Severity::Critical,
         description: format!(
-            "{} IP(s) with 5+ failed login attempts detected",
-            offenders.len()
+            "{} IP(s) with {}+ failed login attempts detected",
+            offenders.len(),
+            threshold
         ),
         evidence,
     })

@@ -1,7 +1,7 @@
 mod cli;
 mod output;
 
-use threatlens::{detector, parser, report};
+use threatlens::{parser, report};
 
 use anyhow::Result;
 use clap::Parser;
@@ -17,10 +17,14 @@ fn main() -> Result<()> {
             file,
             log_type,
             json,
+            brute_force_threshold,
         } => {
             let content = std::fs::read_to_string(&file)?;
             let events = parser::parse(&content, &log_type);
-            let findings = detector::detect(&events);
+            let findings = threatlens::detector::detect_with_brute_force_threshold(
+                &events,
+                brute_force_threshold.max(1),
+            );
             let report = report::build(&file, &log_type, &events, &findings);
             if json {
                 output::json::print(&report)?;

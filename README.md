@@ -54,6 +54,9 @@ threatlens analyze docker.log --log-type docker
 
 # Emit JSON
 threatlens analyze auth.log --json
+
+# Raise the brute-force threshold for noisier environments
+threatlens analyze auth.log --brute-force-threshold 10
 ```
 
 ## Included Example
@@ -62,6 +65,8 @@ The repository includes a small auth log fixture:
 
 ```bash
 threatlens analyze examples/auth.sample
+
+threatlens analyze examples/auth.sample --brute-force-threshold 6
 ```
 
 Real output:
@@ -94,9 +99,11 @@ Findings:
 
 | Rule | Severity | Trigger |
 |---|---|---|
-| `BRUTE_FORCE` | Critical | 5 or more failed login events from the same IP |
+| `BRUTE_FORCE` | Critical | Failed login events from the same IP at or above `--brute-force-threshold` |
 | `SECRET_IN_LOGS` | High | Secret-like strings such as `password=`, `token=`, `api_key=`, `secret=`, or bearer tokens |
 | `SUSPICIOUS_IP` | Medium | Known suspicious IP ranges |
+
+The default brute-force threshold is `5`. Increase it for noisy environments or lower it for stricter local checks.
 
 ## Risk Levels
 
@@ -122,7 +129,7 @@ cargo test
 cargo build --release
 ```
 
-The integration tests cover parser behavior, brute-force detection, secret detection, risk scoring, and CLI output.
+The integration tests cover parser behavior, brute-force detection, configurable thresholds, secret detection, risk scoring, and CLI output.
 
 ## Project Structure
 

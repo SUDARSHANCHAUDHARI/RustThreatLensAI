@@ -4,9 +4,12 @@ This is a solo-maintained roadmap. Items are practical possibilities, not promis
 
 ## Planned
 
-- Add configurable brute-force thresholds.
 - Add Markdown incident summary output.
 - Add more parser fixtures for common auth and web logs.
+
+## Completed
+
+- Configurable brute-force threshold with `--brute-force-threshold`.
 
 ## Maybe Later
 
