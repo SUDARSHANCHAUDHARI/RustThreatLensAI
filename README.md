@@ -152,9 +152,9 @@ tests/
 
 ## Release Status
 
-Current production release: `v1.0.0`
+Current production release: `v1.1.0`
 
-The `v1.0.0` release was verified with formatting, clippy, tests, optimized release build, and `cargo package`.
+The `v1.1.0` release was verified with formatting, clippy, tests, optimized release build, and `cargo package`.
 
 ## License
 
