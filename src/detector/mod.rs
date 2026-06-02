@@ -138,3 +138,75 @@ fn detect_suspicious_ips(events: &[LogEvent]) -> Option<Finding> {
         evidence: matches.into_iter().take(3).collect(),
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::parser::LogEvent;
+
+    fn auth_event(ip: &str, action: &str) -> LogEvent {
+        LogEvent {
+            line: format!("Failed password for root from {ip}"),
+            log_type: "auth".to_string(),
+            ip: Some(ip.to_string()),
+            user: Some("root".to_string()),
+            action: Some(action.to_string()),
+        }
+    }
+
+    fn secret_event(content: &str) -> LogEvent {
+        LogEvent {
+            line: content.to_string(),
+            log_type: "generic".to_string(),
+            ip: None,
+            user: None,
+            action: None,
+        }
+    }
+
+    #[test]
+    fn detects_brute_force_above_threshold() {
+        let events: Vec<LogEvent> = (0..5).map(|_| auth_event("1.2.3.4", "failed_login")).collect();
+        let findings = detect_with_brute_force_threshold(&events, 5);
+        assert!(findings.iter().any(|f| f.rule == "BRUTE_FORCE"));
+    }
+
+    #[test]
+    fn no_brute_force_below_threshold() {
+        let events: Vec<LogEvent> = (0..4).map(|_| auth_event("1.2.3.4", "failed_login")).collect();
+        let findings = detect_with_brute_force_threshold(&events, 5);
+        assert!(!findings.iter().any(|f| f.rule == "BRUTE_FORCE"));
+    }
+
+    #[test]
+    fn detects_secret_in_logs() {
+        let events = vec![secret_event("api_key=supersecret123")];
+        let findings = detect(&events);
+        assert!(findings.iter().any(|f| f.rule == "SECRET_IN_LOGS"));
+    }
+
+    #[test]
+    fn detects_suspicious_ip() {
+        let events = vec![LogEvent {
+            line: "request from 127.0.0.1".to_string(),
+            log_type: "generic".to_string(),
+            ip: Some("127.0.0.1".to_string()),
+            user: None,
+            action: None,
+        }];
+        let findings = detect(&events);
+        assert!(findings.iter().any(|f| f.rule == "SUSPICIOUS_IP"));
+    }
+
+    #[test]
+    fn no_findings_for_clean_events() {
+        let events = vec![LogEvent {
+            line: "INFO server started ok".to_string(),
+            log_type: "generic".to_string(),
+            ip: Some("10.0.0.1".to_string()),
+            user: None,
+            action: None,
+        }];
+        assert!(detect(&events).is_empty());
+    }
+}
