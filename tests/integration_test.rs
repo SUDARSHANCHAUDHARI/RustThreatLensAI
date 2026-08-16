@@ -10,7 +10,7 @@ use threatlens::report;
 
 #[test]
 fn test_help() {
-    Command::cargo_bin("threatlens")
+    Command::cargo_bin("threatlensai")
         .unwrap()
         .arg("--help")
         .assert()
@@ -20,7 +20,7 @@ fn test_help() {
 
 #[test]
 fn test_analyze_subcommand_help() {
-    Command::cargo_bin("threatlens")
+    Command::cargo_bin("threatlensai")
         .unwrap()
         .args(["analyze", "--help"])
         .assert()
@@ -133,7 +133,7 @@ fn test_analyze_real_file_json_output() {
     )
     .unwrap();
 
-    Command::cargo_bin("threatlens")
+    Command::cargo_bin("threatlensai")
         .unwrap()
         .args(["analyze", file.path().to_str().unwrap(), "--json"])
         .assert()
@@ -152,7 +152,7 @@ fn test_cli_custom_brute_force_threshold_can_reduce_noise() {
         .unwrap();
     }
 
-    Command::cargo_bin("threatlens")
+    Command::cargo_bin("threatlensai")
         .unwrap()
         .args([
             "analyze",

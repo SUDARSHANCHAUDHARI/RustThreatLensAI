@@ -5,7 +5,7 @@ Rust CLI tool that analyzes log files for threats — detects brute-force attack
 exposed secrets, suspicious IPs, and anomalous patterns in auth/nginx/docker logs.
 
 ## Type
-Rust CLI (threatlens)
+Rust CLI (threatlensai)
 
 ## Stack
 - Language: Rust (stable)
