@@ -32,7 +32,7 @@ cargo build --release
 The binary is created at:
 
 ```bash
-target/release/threatlens
+target/release/threatlensai
 ```
 
 Optional local install:
@@ -45,18 +45,18 @@ cargo install --path .
 
 ```bash
 # Analyze a log file and auto-detect log type
-threatlens analyze /var/log/auth.log
+threatlensai analyze /var/log/auth.log
 
 # Specify the log type
-threatlens analyze nginx.log --log-type nginx
-threatlens analyze auth.log --log-type auth
-threatlens analyze docker.log --log-type docker
+threatlensai analyze nginx.log --log-type nginx
+threatlensai analyze auth.log --log-type auth
+threatlensai analyze docker.log --log-type docker
 
 # Emit JSON
-threatlens analyze auth.log --json
+threatlensai analyze auth.log --json
 
 # Raise the brute-force threshold for noisier environments
-threatlens analyze auth.log --brute-force-threshold 10
+threatlensai analyze auth.log --brute-force-threshold 10
 ```
 
 ## Included Example
@@ -64,9 +64,9 @@ threatlens analyze auth.log --brute-force-threshold 10
 The repository includes a small auth log fixture:
 
 ```bash
-threatlens analyze examples/auth.sample
+threatlensai analyze examples/auth.sample
 
-threatlens analyze examples/auth.sample --brute-force-threshold 6
+threatlensai analyze examples/auth.sample --brute-force-threshold 6
 ```
 
 Real output:

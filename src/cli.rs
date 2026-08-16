@@ -2,7 +2,7 @@ use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
 #[command(
-    name = "threatlens",
+    name = "threatlensai",
     about = "AI-powered log threat analyzer — detects brute-force, suspicious IPs, secrets, and anomalies",
     version
 )]

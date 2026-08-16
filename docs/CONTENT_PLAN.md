@@ -19,5 +19,5 @@ Write a direct technical blog post about local log threat scanning for solo deve
 ## Useful Examples
 
 - `examples/auth.sample`
-- `threatlens analyze examples/auth.sample --brute-force-threshold 6`
+- `threatlensai analyze examples/auth.sample --brute-force-threshold 6`
 - Secret-like finding example.
