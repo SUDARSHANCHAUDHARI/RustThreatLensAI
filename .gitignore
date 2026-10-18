@@ -33,3 +33,6 @@ __pycache__/
 # Added by cargo
 
 /target
+
+# repoguard scan output
+repoguard-results/
